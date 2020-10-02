@@ -1,0 +1,53 @@
+{
+  "name": "repo",
+  "version": "1.0.0",
+  "description": "\"repo\"",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "config": "^3.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.1.5",
+    "express-jwt": "^5.3.1",
+    "mongoose": "^5.5.11",
+    "passport": "^0.4.1",
+    "passport-custom": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.17.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vohrakunal/repo"
+  },
+  "author": "Kunal Vohra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vohrakunal/repo"
+  },
+  "homepage": "https://github.com/vohrakunal/repo"
+}

@@ -1,0 +1,15 @@
+{
+  "port": 4000,
+
+  "db": "mongodb://localhost:27017/speechify-task",
+  "jwtsecret": "thisisjwtsecret",
+  "cryptrSecret": "myTotalySecretKey",
+  "jwtexp": "1d",
+  "conf": {
+    "useCreateIndex": true,
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
+    "useFindAndModify": false,
+    "bufferCommands": false
+  }
+}
