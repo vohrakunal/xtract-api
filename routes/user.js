@@ -5,8 +5,6 @@ const passport = require("passport");
 // express router
 const router = express.Router();
 
-// models
-const { UsersLogin } = require("../models/users");
 
 // APIS
 
@@ -19,7 +17,6 @@ const {
 
 router.post(
   "/userlogin",
-  // validate(UsersLogin),
   async (req, res, next) => {
     passport.authenticate("users", (err, passportUser, info) => {
       if (err) {

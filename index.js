@@ -3,6 +3,7 @@ const express = require("express");
 const config = require("config");
 const app = express();
 const morgan = require("morgan");
+const fileUpload = require('express-fileupload');
 const server = require("http").createServer(app);
 
 app.use(morgan("dev"));
@@ -16,6 +17,8 @@ require("express-async-errors");
 if (isProduction) require("./startup/prod")(app);
 
 // startup
+app.use(express.static('.uploads'));
+app.use(fileUpload());
 require("./startup/db")();
 require("./startup/cors")(app);
 require("./startup/passport")(app);
