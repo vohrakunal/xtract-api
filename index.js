@@ -17,7 +17,7 @@ require("express-async-errors");
 if (isProduction) require("./startup/prod")(app);
 
 // startup
-app.use(express.static('.uploads'));
+// app.use(express.static('.uploads'));
 app.use(fileUpload());
 require("./startup/db")();
 require("./startup/cors")(app);

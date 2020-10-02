@@ -52,7 +52,7 @@ router.post('/uploadfile', async(req,res)=>{
 
     let user = await Users.findOne({_id: req.payload.id});
     
-    user.files.push({fileId: savedFileData._id})
+    user.files.push({fileId: savedFileData._id, ori_name: file.name})
     
     await user.save();
 
@@ -70,21 +70,34 @@ router.get('/getallpdfs', async(req,res)=>{
 
 
     let allUserFiles = []
-    console.log(user.files)
     if(user.files){
         for(file of user.files){
-            let file_model = await Files.findOne({_id: file.fileId}, 'filePath');
-            let fileData = {};
+            let fileData ={}
+            fileData.id = file._id
             fileData.date = file.timeStamp
             fileData.name = file.ori_name;
-            fileData.parsedData = await parsePdf(file_model.filePath);
             allUserFiles.push(fileData);
         }
     
     }
     
-    return res.send({prevUploads: allUserFiles}).status(200);
+    return res.send(allUserFiles).status(200);
 
+});
+
+router.get('/getspecificpdf/:id', async(req,res)=>{
+
+    const user = await Users.findOne({_id:req.payload.id}, 'files');
+    if(user.files){
+        for(file of user.files){
+       
+            if(file._id.toString() == req.params.id){
+                let file_model = await Files.findOne({_id: file.fileId}, 'filePath');
+                return res.send(await parsePdf(file_model.filePath)).status(200)
+            }
+        }
+    }
+    res.send({err:"No File Found"}).status(400);
 })
 
 module.exports = router;
