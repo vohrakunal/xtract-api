@@ -25,16 +25,13 @@ const { parse } = require("path");
 const parsePdf = async(pdfid) =>{
     let dataBuffer = fs.readFileSync(`${__dirname}/.uploads/${pdfid}`);
 
-    pdf(dataBuffer).then(function(data) {
-        console.log(data);
-    })
+    return await pdf(dataBuffer);
 
 
 }
 
 
 router.post('/uploadfile', async(req,res)=>{
-    console.log(req);
     if(!req.files){
         return res.status(500).send({err: "No file Uploaded"});
 
@@ -59,13 +56,36 @@ router.post('/uploadfile', async(req,res)=>{
     
     await user.save();
 
-    let pdfData = parsePdf(fileName+'.pdf');
+    let pdfData = await parsePdf(fileName+'.pdf');
 
     return res.send({msg:"Success", data:pdfData}).status(200);
 
     })
 
 });
+ 
+router.get('/getallpdfs', async(req,res)=>{
+
+    const user = await Users.findOne({_id:req.payload.id}, 'files');
+
+
+    let allUserFiles = []
+    console.log(user.files)
+    if(user.files){
+        for(file of user.files){
+            let file_model = await Files.findOne({_id: file.fileId}, 'filePath');
+            let fileData = {};
+            fileData.date = file.timeStamp
+            fileData.name = file.ori_name;
+            fileData.parsedData = await parsePdf(file_model.filePath);
+            allUserFiles.push(fileData);
+        }
+    
+    }
+    
+    return res.send({prevUploads: allUserFiles}).status(200);
+
+})
 
 module.exports = router;
 

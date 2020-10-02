@@ -39,6 +39,9 @@ const userSchema = new mongoose.Schema({
         fileId: {
             type: ObjectId
         },
+        ori_name:{
+            type:String
+        },
         timeStamp: {
             type: Date,
             default: () => {
