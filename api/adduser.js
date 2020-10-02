@@ -18,7 +18,7 @@ const addUser = async userData => {
         }
     } else {
         return {
-            errmsg: "Username or Email Already Exist!"
+            errmsg: "Email Already Exist!"
         };
     }
 };
