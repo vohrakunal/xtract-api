@@ -100,6 +100,16 @@ router.get('/getspecificpdf/:id', async(req,res)=>{
     res.send({err:"No File Found"}).status(400);
 })
 
+router.get("/getUserDetails", async(req,res)=>{
+    const user = await Users.findOne({_id: req.payload.id}, 'name userEmail');
+
+    if(user){
+        return res.send(user).status(200);
+    }
+    return res.send({err:"No User Found"}).status(400);
+
+  })
+  
 module.exports = router;
 
 
